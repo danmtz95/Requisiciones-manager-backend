@@ -13,3 +13,11 @@ class ClientesViewSet(ViewSet):
         queryset = Cliente.objects.all()
         serializer = ClienteSerializer(queryset, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
+
+    def create(self, request):
+        data = request.data
+        serializer = ClienteSerializer(data=request.data)
+        if(serializer.is_valid()):
+            serializer.save()
+            return Response(status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
