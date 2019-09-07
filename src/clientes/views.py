@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from clientes.models import Cliente
 from clientes.serializers import ClienteSerializer
+from clientes.models import Cliente
 
 class ClientesViewSet(ViewSet):
 
@@ -15,9 +16,7 @@ class ClientesViewSet(ViewSet):
         return Response(serializer.data, status.HTTP_200_OK)
 
     def create(self, request):
-        data = request.data
-        serializer = ClienteSerializer(data=request.data)
-        if(serializer.is_valid()):
-            serializer.save()
-            return Response(status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        cliente = Cliente(**request.data)
+        cliente.usuario_creacion = request.user
+        cliente.save() 
+        return Response(status=status.HTTP_200_OK)
