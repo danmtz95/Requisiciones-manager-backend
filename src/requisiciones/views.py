@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status, permissions
-from requisiciones.models import Requisicion, RequesicionTipo
+from requisiciones.models import Requisicion, RequesicionTipo, RequesicionEstatus
 from requisiciones.serializers import RequisicionSerializer, RequisicionTipoSerializer
 
 class RequisicionesViewSet(ViewSet):
@@ -16,12 +16,11 @@ class RequisicionesViewSet(ViewSet):
         return Response(serializer.data, status.HTTP_200_OK)
 
     def create(self, request):
-        data = request.data
-        serializer = RequisicionSerializer(data=request.data)
-        if(serializer.is_valid()):
-            serializer.save()
-            return Response(status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        requisicion = Requisicion(**request.data)
+        requisicion.usuario_creacion = request.user
+        requisicion.estatus = RequesicionEstatus.objects.get(id=RequesicionEstatus.EN_ESPERA)  
+        requisicion.save()
+        return Response(status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['get'])
     def tipos(self, request):
