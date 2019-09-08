@@ -1,0 +1,35 @@
+[
+  {
+    "model": "requisiciones.requesicionestatus",
+    "pk": 1,
+    "fields": {
+      "concepto": "En espera",
+      "descripcion": "d",
+      "tiempo": "d",
+      "fecha_creacion": "2019-09-08T21:57:06.925Z",
+      "usuario_creacion": 1
+    }
+  },
+  {
+    "model": "requisiciones.requesicionestatus",
+    "pk": 2,
+    "fields": {
+      "concepto": "Aceptada",
+      "descripcion": "aceptada",
+      "tiempo": "1",
+      "fecha_creacion": "2019-09-08T21:57:22.992Z",
+      "usuario_creacion": 1
+    }
+  },
+  {
+    "model": "requisiciones.requesicionestatus",
+    "pk": 3,
+    "fields": {
+      "concepto": "Rechazada",
+      "descripcion": "Rechazada",
+      "tiempo": "1",
+      "fecha_creacion": "2019-09-08T21:57:34.989Z",
+      "usuario_creacion": 1
+    }
+  }
+]

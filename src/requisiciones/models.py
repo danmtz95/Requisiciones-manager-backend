@@ -12,6 +12,10 @@ class RequesicionTipo(models.Model):
 
 
 class RequesicionEstatus(models.Model):
+    EN_ESPERA = 1
+    ACEPTADO = 2
+    RECHAZADO = 3
+
     concepto = models.CharField(max_length=250)
     descripcion = models.CharField(max_length=250)
     tiempo = models.CharField(max_length=250)
