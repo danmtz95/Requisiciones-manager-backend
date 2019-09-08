@@ -7,4 +7,4 @@ class RequisicionSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Requisicion
         fields = '__all__'
-        depth = 0
+        depth = 1
