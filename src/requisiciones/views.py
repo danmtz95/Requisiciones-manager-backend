@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status, permissions
-from requisiciones.models import Requisicion, RequesicionTipo, RequesicionEstatus
+from requisiciones.models import Requisicion, RequesicionTipo, RequesicionEstatus, Cotizacion
 from requisiciones.serializers import RequisicionSerializer, RequisicionTipoSerializer
 
 class RequisicionesViewSet(ViewSet):
@@ -27,3 +27,13 @@ class RequisicionesViewSet(ViewSet):
         queryset = RequesicionTipo.objects.all()
         serializers = RequisicionTipoSerializer(queryset, many=True)
         return Response(serializers.data, status.HTTP_200_OK)
+
+    @action(detail=True, methods=['post'])
+    def cotizaciones(self, request, pk=None):
+        cotizacion = Cotizacion(**self.request.data)
+        cotizacion.usuario_creacion = request.user
+        cotizacion.save()
+        requisicion = Requisicion.objects.get(id=pk)
+        requisicion.cotizacion = cotizacion
+        requisicion.save()
+        return Response(status=status.HTTP_200_OK)
