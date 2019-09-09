@@ -30,6 +30,23 @@ class RequesicionEstatus(models.Model):
     def __str__(self):
         return self.concepto
 
+class CategoriaEstado(models.Model):
+    categoria = models.CharField(max_length=255)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    usuario_creacion = models.ForeignKey(
+        User, on_delete=models.CASCADE
+    )
+
+class RequisicionEstado(models.Model):
+    razon = models.TextField()
+    cateogoria = models.ForeignKey(
+        CategoriaEstado, on_delete=models.CASCADE
+    )
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
+    usuario_creacion = models.ForeignKey(
+        User, on_delete=models.CASCADE
+    )
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
 
 class Cotizacion(models.Model):
     fecha = models.DateTimeField()
@@ -51,6 +68,9 @@ class Requisicion(models.Model):
     )
     estatus = models.ForeignKey(
         RequesicionEstatus, on_delete=models.CASCADE
+    )
+    estado = models.ForeignKey(
+        RequisicionEstado, on_delete=models.CASCADE, blank=True, null=True
     )
     cotizacion = models.ForeignKey(
         Cotizacion, on_delete=models.CASCADE, blank=True, null=True
