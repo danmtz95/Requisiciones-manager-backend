@@ -10,6 +10,9 @@ class RequesicionTipo(models.Model):
         User, on_delete=models.CASCADE
     )
 
+    def __str__(self):
+        return self.concepto
+
 
 class RequesicionEstatus(models.Model):
     EN_ESPERA = 1
@@ -24,10 +27,15 @@ class RequesicionEstatus(models.Model):
         User, on_delete=models.CASCADE
     )
 
+    def __str__(self):
+        return self.concepto
+
 
 class Cotizacion(models.Model):
+    fecha = models.DateTimeField()
     folio = models.CharField(max_length=250)
     monto = models.FloatField()
+    orden_proveedor = models.CharField(max_length=250)
     usuario_creacion = models.ForeignKey(
         User, on_delete=models.CASCADE
     )
