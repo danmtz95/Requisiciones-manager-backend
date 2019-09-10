@@ -5,8 +5,8 @@ from rest_framework.decorators import action
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status, permissions
-from requisiciones.models import Requisicion, RequesicionTipo, RequesicionEstatus, Cotizacion
-from requisiciones.serializers import RequisicionSerializer, RequisicionTipoSerializer
+from requisiciones.models import Requisicion, RequesicionTipo, RequesicionEstatus, Cotizacion, CategoriaEstado
+from requisiciones.serializers import RequisicionSerializer, RequisicionTipoSerializer, RequesicionEstatusSerializer, CategoriaEstadoSerializer
 
 class RequisicionesViewSet(ViewSet):
 
@@ -25,8 +25,8 @@ class RequisicionesViewSet(ViewSet):
     @action(detail=False, methods=['get'])
     def tipos(self, request):
         queryset = RequesicionTipo.objects.all()
-        serializers = RequisicionTipoSerializer(queryset, many=True)
-        return Response(serializers.data, status.HTTP_200_OK)
+        serializer = RequisicionTipoSerializer(queryset, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
 
     @action(detail=True, methods=['post'])
     def cotizaciones(self, request, pk=None):
@@ -37,3 +37,15 @@ class RequisicionesViewSet(ViewSet):
         requisicion.cotizacion = cotizacion
         requisicion.save()
         return Response(status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'])
+    def categorias(self, request):
+        queryset = CategoriaEstado.objects.all()
+        serializer = CategoriaEstadoSerializer(queryset, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'])
+    def estatus(self, request):
+        queryset = RequesicionEstatus.objects.all()
+        serializer = RequesicionEstatusSerializer(queryset, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
