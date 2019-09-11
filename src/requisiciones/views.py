@@ -11,7 +11,7 @@ from requisiciones.serializers import *
 class RequisicionesViewSet(ViewSet):
 
     def list(self, request):
-        queryset = Requisicion.objects.all()
+        queryset = Requisicion.objects.filter(usuario_creacion=request.user)
         serializer = RequisicionSerializer(queryset, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
