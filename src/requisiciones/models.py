@@ -37,9 +37,12 @@ class CategoriaEstado(models.Model):
         User, on_delete=models.CASCADE
     )
 
+    def __str__(self):
+        return self.categoria
+
 class RequisicionEstado(models.Model):
     razon = models.TextField()
-    cateogoria = models.ForeignKey(
+    categoria = models.ForeignKey(
         CategoriaEstado, on_delete=models.CASCADE
     )
     fecha_actualizacion = models.DateTimeField(auto_now=True)
