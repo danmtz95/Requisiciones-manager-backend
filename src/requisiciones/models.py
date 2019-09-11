@@ -43,7 +43,7 @@ class CategoriaEstado(models.Model):
 class RequisicionEstado(models.Model):
     razon = models.TextField()
     categoria = models.ForeignKey(
-        CategoriaEstado, on_delete=models.CASCADE
+        CategoriaEstado, on_delete=models.CASCADE, null=True, blank=True
     )
     fecha_actualizacion = models.DateTimeField(auto_now=True)
     usuario_creacion = models.ForeignKey(
@@ -83,3 +83,6 @@ class Requisicion(models.Model):
         User, on_delete=models.CASCADE
     )
     fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.fecha_correo) + ' - ' + str(self.cliente)

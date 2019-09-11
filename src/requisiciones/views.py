@@ -5,8 +5,8 @@ from rest_framework.decorators import action
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status, permissions
-from requisiciones.models import RequisicionEstado, Requisicion, RequesicionTipo, RequesicionEstatus, Cotizacion, CategoriaEstado
-from requisiciones.serializers import RequisicionSerializer, RequisicionTipoSerializer, RequisicionEstadoSerializer,RequesicionEstatusSerializer, CategoriaEstadoSerializer
+from requisiciones.models import *
+from requisiciones.serializers import *
 
 class RequisicionesViewSet(ViewSet):
 
@@ -18,7 +18,9 @@ class RequisicionesViewSet(ViewSet):
     def create(self, request):
         requisicion = Requisicion(**request.data)
         requisicion.usuario_creacion = request.user
-        requisicion.estatus = RequesicionEstatus.objects.get(id=RequesicionEstatus.EN_ESPERA)  
+        requisicion.estatus = RequesicionEstatus.objects.get(id=RequesicionEstatus.EN_ESPERA)
+        requisicion_estado = RequisicionEstado.objects.create(usuario_creacion=request.user)
+        requisicion.estado = requisicion_estado
         requisicion.save()
         return Response(status=status.HTTP_200_OK)
 
@@ -52,7 +54,7 @@ class RequisicionesViewSet(ViewSet):
 
     @action(detail=True, methods=['get'])
     def estados(self, request, pk=None):
-        estado = RequisicionEstado.objects.get(id=pk)
-        serializer = RequisicionEstadoSerializer(estado)
+        requisicion = Requisicion.objects.get(id=pk)
+        serializer = RequisicionEstadoSerializer(requisicion.estado)
         return Response(serializer.data, status.HTTP_200_OK)
 
