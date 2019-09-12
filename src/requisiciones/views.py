@@ -37,6 +37,7 @@ class RequisicionesViewSet(ViewSet):
         cotizacion.save()
         requisicion = Requisicion.objects.get(id=pk)
         requisicion.cotizacion = cotizacion
+        requisicion.estatus_id = RequesicionEstatus.COTIZADO
         requisicion.save()
         return Response(status=status.HTTP_200_OK)
 

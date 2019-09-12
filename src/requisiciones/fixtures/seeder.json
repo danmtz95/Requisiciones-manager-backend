@@ -6,7 +6,7 @@
       "concepto": "En espera",
       "descripcion": "d",
       "tiempo": "d",
-      "fecha_creacion": "2019-09-08T21:57:06.925Z",
+      "fecha_creacion": "2019-09-08T21:57:06.925",
       "usuario_creacion": 1
     }
   },
@@ -17,7 +17,7 @@
       "concepto": "Aceptada",
       "descripcion": "aceptada",
       "tiempo": "1",
-      "fecha_creacion": "2019-09-08T21:57:22.992Z",
+      "fecha_creacion": "2019-09-08T21:57:22.992",
       "usuario_creacion": 1
     }
   },
@@ -28,7 +28,18 @@
       "concepto": "Rechazada",
       "descripcion": "Rechazada",
       "tiempo": "1",
-      "fecha_creacion": "2019-09-08T21:57:34.989Z",
+      "fecha_creacion": "2019-09-08T21:57:34.989",
+      "usuario_creacion": 1
+    }
+  },
+  {
+    "model": "requisiciones.requesicionestatus",
+    "pk": 4,
+    "fields": {
+      "concepto": "Cotizado",
+      "descripcion": "Cotizado",
+      "tiempo": "1",
+      "fecha_creacion": "2019-09-08T21:57:34.989",
       "usuario_creacion": 1
     }
   }
