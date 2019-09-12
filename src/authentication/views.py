@@ -19,6 +19,7 @@ def login(request):
         auth.login(request, user)
         token, created = Token.objects.get_or_create(user=user)
         credentials["token"] = token.key
+        credentials["user"] = user.username
         return Response(status=status.HTTP_200_OK, data=credentials)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
