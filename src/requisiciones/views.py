@@ -52,9 +52,18 @@ class RequisicionesViewSet(ViewSet):
         serializer = RequesicionEstatusSerializer(queryset, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=['get','put'])
     def estados(self, request, pk=None):
-        requisicion = Requisicion.objects.get(id=pk)
-        serializer = RequisicionEstadoSerializer(requisicion.estado)
-        return Response(serializer.data, status.HTTP_200_OK)
+        if request.method == 'PUT':
+            requisicion = Requisicion.objects.select_related('estado').get(id=pk)
+            requisicion.estatus_id = request.data['estatus_id']
+            requisicion.save()
+            requisicion.estado.categoria_id = request.data['categoria_id']
+            requisicion.estado.razon = request.data['razon']
+            requisicion.estado.save()
+            return Response(status.HTTP_200_OK)
+        else:
+            requisicion = Requisicion.objects.get(id=pk)
+            serializer = RequisicionEstadoSerializer(requisicion.estado)
+            return Response(serializer.data, status.HTTP_200_OK)
 
