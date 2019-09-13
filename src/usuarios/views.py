@@ -19,6 +19,7 @@ class UsuariosViewSet(ViewSet):
         print(request.data)
         usuario = User()
         usuario.username = request.data["usuario"]
+        usuario.password = request.data["password"]
         usuario.email = request.data["correo"]
         usuario.first_name = request.data["nombre"]
         usuario.last_name = request.data["apellido"]
