@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'authentication',
     'clientes',
     'requisiciones',
-    'usuarios'
+    'usuarios',
+    'proveedores',
 ]
 
 MIDDLEWARE = [
