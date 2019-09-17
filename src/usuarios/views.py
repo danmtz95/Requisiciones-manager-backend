@@ -21,8 +21,8 @@ class UsuariosViewSet(ViewSet):
         usuario.email = request.data["correo"]
         usuario.first_name = request.data["nombre"]
         usuario.last_name = request.data["apellido"]
-        usuario.group = request.data["grupo"]
         usuario.save()
+        usuario.groups.add(request.data["grupo"])
         return Response(status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['get'])
