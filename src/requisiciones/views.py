@@ -67,4 +67,9 @@ class RequisicionesViewSet(ViewSet):
             requisicion = Requisicion.objects.get(id=pk)
             serializer = RequisicionEstadoSerializer(requisicion.estado)
             return Response(serializer.data, status.HTTP_200_OK)
-
+            
+    @action(detail=False, methods=['get'])
+    def filtrados(self, request):
+        queryset = Requisicion.objects.filter(estatus_id=RequesicionEstatus.ACEPTADO)
+        serializer = RequisicionSerializer(queryset, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
