@@ -87,3 +87,16 @@ class Requisicion(models.Model):
 
     def __str__(self):
         return str(self.fecha_correo) + ' - ' + str(self.cliente)
+    
+class ReporteCompras(models.Model):
+    estado_compra =  models.CharField(max_length=150)
+    rastreo = models.CharField(max_length=150)
+    costo = models.FloatField()
+    proveedores = models.CharField(max_length=250)
+    requisicion = models.ForeignKey(
+        Requisicion, on_delete=models.CASCADE, blank=True, null=True
+    )
+    usuario_creacion = models.ForeignKey(
+        User, on_delete=models.CASCADE
+    )
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
