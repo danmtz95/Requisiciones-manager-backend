@@ -74,8 +74,19 @@ class RequisicionesViewSet(ViewSet):
         serializer = RequisicionSerializer(queryset, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
     
+    @action(detail=True, methods=['post'])
+    def cotizacion_compras(self, request, pk=None):
+        cotizacion_compras = CotizacionCompras(**self.request.data)
+        cotizacion_compras.usuario_creacion = request.user
+        cotizacion_compras.save()
+        requisicion = Requisicion.objects.get(id=pk)
+        requisicion.cotizacion_compras = cotizacion_compras
+        requisicion.save()
+        return Response(status=status.HTTP_200_OK)
+
     @action(detail=False, methods=['get'])
-    def reportes(self, request):
-        reporte = ReportesCompras.objects.all()
-        serializer = ReportesComprasSerializer(queryset, many=True)
+    def reportes(self, request, idpk= None):
+        queryset = ReporteCompras.objects.filter(requisicion=idpk)
+        print(queryset)
+        serializer = ReporteComprasSerializer(queryset, many=True)
         return Response(serializer.data, status.HTTP_200_OK)

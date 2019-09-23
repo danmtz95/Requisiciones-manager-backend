@@ -62,6 +62,16 @@ class Cotizacion(models.Model):
     )
     fecha_creacion = models.DateTimeField(auto_now_add=True)
 
+class CotizacionCompras(models.Model):
+    fecha = models.DateTimeField()
+    folio = models.CharField(max_length=250)
+    monto = models.FloatField()
+    proveedores = models.CharField(max_length=250)
+    usuario_creacion = models.ForeignKey(
+        User, on_delete=models.CASCADE
+    )
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
 class Requisicion(models.Model):
     fecha_correo = models.DateTimeField()
     cliente = models.ForeignKey(
@@ -79,6 +89,9 @@ class Requisicion(models.Model):
     cotizacion = models.ForeignKey(
         Cotizacion, on_delete=models.CASCADE, blank=True, null=True
     )
+    cotizacion_compras = models.ForeignKey(
+        CotizacionCompras, on_delete=models.CASCADE, blank=True, null=True
+    )
     nota = models.CharField(max_length=250)
     usuario_creacion = models.ForeignKey(
         User, on_delete=models.CASCADE
@@ -87,16 +100,29 @@ class Requisicion(models.Model):
 
     def __str__(self):
         return str(self.fecha_correo) + ' - ' + str(self.cliente)
+
+class EstatusCompras(models.Model):
+    EN_ESPERA = 1
+    ENCARGADO = 2
+    ENTREGADO = 3
+    concepto = models.CharField(max_length=250)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    usuario_creacion = models.ForeignKey(
+        User, on_delete=models.CASCADE
+    )
     
 class ReporteCompras(models.Model):
-    estado_compra =  models.CharField(max_length=150)
     rastreo = models.CharField(max_length=150)
     costo = models.FloatField()
     proveedores = models.CharField(max_length=250)
-    requisicion = models.ForeignKey(
-        Requisicion, on_delete=models.CASCADE, blank=True, null=True
+    estado_compra = models.ForeignKey(
+        EstatusCompras, on_delete=models.CASCADE, blank=True, null=True
+    )
+    cotizacion_compras = models.ForeignKey(
+        CotizacionCompras, on_delete=models.CASCADE, blank=True, null=True
     )
     usuario_creacion = models.ForeignKey(
         User, on_delete=models.CASCADE
     )
     fecha_creacion = models.DateTimeField(auto_now_add=True)
+

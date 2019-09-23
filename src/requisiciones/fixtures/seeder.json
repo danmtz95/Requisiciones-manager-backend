@@ -42,5 +42,32 @@
       "fecha_creacion": "2019-09-08T21:57:34.989",
       "usuario_creacion": 1
     }
+  },
+  {
+    "model": "requisiciones.estatuscompras",
+    "pk": 1,
+    "fields": {
+      "concepto": "En espera",
+      "fecha_creacion": "2019-09-19T14:25:34.368",
+      "usuario_creacion": 1
+    }
+  },
+  {
+    "model": "requisiciones.estatuscompras",
+    "pk": 2,
+    "fields": {
+      "concepto": "Encargado",
+      "fecha_creacion": "2019-09-19T14:25:55.787",
+      "usuario_creacion": 1
+    }
+  },
+  {
+    "model": "requisiciones.estatuscompras",
+    "pk": 3,
+    "fields": {
+      "concepto": "Entregado",
+      "fecha_creacion": "2019-09-19T14:26:28.577",
+      "usuario_creacion": 1
+    }
   }
 ]
