@@ -75,7 +75,7 @@ class RequisicionesViewSet(ViewSet):
         return Response(serializer.data, status.HTTP_200_OK)
     
     @action(detail=True, methods=['post'])
-    def cotizacion_compras(self, request, pk=None):
+    def cotizaciones_compras(self, request, pk=None):
         cotizacion_compras = CotizacionCompras(**self.request.data)
         cotizacion_compras.usuario_creacion = request.user
         cotizacion_compras.save()
