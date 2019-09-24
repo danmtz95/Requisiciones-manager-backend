@@ -110,10 +110,13 @@ class EstatusCompras(models.Model):
     usuario_creacion = models.ForeignKey(
         User, on_delete=models.CASCADE
     )
+    def __str__(self):
+        return self.concepto
     
 class ReporteCompras(models.Model):
     rastreo = models.CharField(max_length=150)
     costo = models.FloatField()
+    paqueteria = models.CharField(max_length=250)
     proveedores = models.CharField(max_length=250)
     estado_compra = models.ForeignKey(
         EstatusCompras, on_delete=models.CASCADE, blank=True, null=True
@@ -124,5 +127,5 @@ class ReporteCompras(models.Model):
     usuario_creacion = models.ForeignKey(
         User, on_delete=models.CASCADE
     )
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_creacion = models.DateTimeField()
 
