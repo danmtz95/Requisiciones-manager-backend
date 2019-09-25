@@ -19,7 +19,6 @@ class RequesicionEstatus(models.Model):
     ACEPTADO = 2
     RECHAZADO = 3
     COTIZADO = 4
-
     concepto = models.CharField(max_length=250)
     descripcion = models.CharField(max_length=250)
     tiempo = models.CharField(max_length=250)
@@ -74,6 +73,7 @@ class CotizacionCompras(models.Model):
 
 class Requisicion(models.Model):
     fecha_correo = models.DateTimeField()
+    compra_rapida = models.CharField(max_length=250)
     cliente = models.ForeignKey(
         Cliente, on_delete=models.CASCADE
     )
@@ -121,8 +121,8 @@ class ReporteCompras(models.Model):
     estado_compra = models.ForeignKey(
         EstatusCompras, on_delete=models.CASCADE, blank=True, null=True
     )
-    cotizacion_compras = models.ForeignKey(
-        CotizacionCompras, on_delete=models.CASCADE, blank=True, null=True
+    requisicion = models.ForeignKey(
+        Requisicion, on_delete=models.CASCADE, blank=True, null=True
     )
     usuario_creacion = models.ForeignKey(
         User, on_delete=models.CASCADE

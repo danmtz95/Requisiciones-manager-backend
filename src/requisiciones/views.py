@@ -86,8 +86,7 @@ class RequisicionesViewSet(ViewSet):
 
     @action(detail=True, methods=['get'])
     def reportes(self, request, pk= None):
-        queryset = ReporteCompras.objects.filter(cotizacion_compras_id=pk)
-        print(queryset)
+        queryset = ReporteCompras.objects.filter(requisicion_id=pk)
         serializer = ReporteComprasSerializer(queryset, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
     
@@ -95,7 +94,7 @@ class RequisicionesViewSet(ViewSet):
     def create_reporte(self, request, pk=None):
         reporte = ReporteCompras(**self.request.data)
         reporte.usuario_creacion = request.user
-        reporte.cotizacion_compras_id= pk
+        reporte.requisicion_id= pk
         reporte.estado_compra = EstatusCompras.objects.get(id=EstatusCompras.EN_ESPERA)
         reporte.save()
         return Response(status=status.HTTP_200_OK)
