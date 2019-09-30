@@ -73,6 +73,12 @@ class RequisicionesViewSet(ViewSet):
         queryset = Requisicion.objects.filter(estatus_id=RequesicionEstatus.ACEPTADO)
         serializer = RequisicionSerializer(queryset, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
+ 
+    @action(detail=False, methods=['get'])   
+    def filtrado_tipo(self, request):
+        queryset = Requisicion.objects.filter(estatus_id=request.data)
+        serializer = RequisicionSerializer(queryset, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
     
     @action(detail=True, methods=['post'])
     def cotizaciones_compras(self, request, pk=None):
@@ -98,3 +104,13 @@ class RequisicionesViewSet(ViewSet):
         reporte.estado_compra = EstatusCompras.objects.get(id=EstatusCompras.EN_ESPERA)
         reporte.save()
         return Response(status=status.HTTP_200_OK)
+    
+    @action(detail=True, methods=['post'])
+    def create_compra_rapida(self, request, pk=None):
+        compra_rapida. usuario_creacion = request.user
+        compra_rapida.save()
+        requisicion = Requisicion.objects.get(id=pk)
+        requisicion.compra_rapida = compra_rapida
+        requisicion.save()
+        return Response(status=status.HTTP_200_OK)
+    

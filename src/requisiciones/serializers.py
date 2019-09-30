@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from requisiciones.models import Requisicion, RequesicionTipo, CategoriaEstado, RequesicionEstatus, RequisicionEstado, ReporteCompras, CotizacionCompras, EstatusCompras
+from requisiciones.models import Requisicion, RequesicionTipo, CategoriaEstado, RequesicionEstatus, RequisicionEstado, ReporteCompras, CotizacionCompras, EstatusCompras, CompraRapida
 
 class RequisicionSerializer(serializers.ModelSerializer):
     class Meta: 
@@ -40,4 +40,9 @@ class CotizacionComprasSerializer(serializers.ModelSerializer):
 class EstatusComprasSerializer(serializers.ModelSerializer):
     class Meta:
         model = EstatusCompras
+        fields = '__all__'
+
+class CompraRapidaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompraRapida
         fields = '__all__'

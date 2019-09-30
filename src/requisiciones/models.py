@@ -61,6 +61,14 @@ class Cotizacion(models.Model):
     )
     fecha_creacion = models.DateTimeField(auto_now_add=True)
 
+class CompraRapida(models.Model):
+    costo = models.FloatField()
+    proveedores = models.CharField(max_length=250)
+    fecha_creacion = models.DateTimeField()
+    usuario_creacion = models.ForeignKey(
+        User, on_delete=models.CASCADE
+    )
+
 class CotizacionCompras(models.Model):
     fecha = models.DateTimeField()
     folio = models.CharField(max_length=250)
@@ -73,7 +81,6 @@ class CotizacionCompras(models.Model):
 
 class Requisicion(models.Model):
     fecha_correo = models.DateTimeField()
-    compra_rapida = models.CharField(max_length=250)
     cliente = models.ForeignKey(
         Cliente, on_delete=models.CASCADE
     )
@@ -88,6 +95,9 @@ class Requisicion(models.Model):
     )
     cotizacion = models.ForeignKey(
         Cotizacion, on_delete=models.CASCADE, blank=True, null=True
+    )
+    compra_rapida = models.ForeignKey(
+        CompraRapida, on_delete=models.CASCADE, blank=True, null=True
     )
     cotizacion_compras = models.ForeignKey(
         CotizacionCompras, on_delete=models.CASCADE, blank=True, null=True
@@ -128,4 +138,3 @@ class ReporteCompras(models.Model):
         User, on_delete=models.CASCADE
     )
     fecha_creacion = models.DateTimeField()
-
