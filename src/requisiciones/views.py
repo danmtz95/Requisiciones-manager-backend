@@ -76,7 +76,8 @@ class RequisicionesViewSet(ViewSet):
  
     @action(detail=False, methods=['get'])   
     def filtrado_tipo(self, request):
-        queryset = Requisicion.objects.filter(estatus_id=request.data)
+        requisicion_tipo=request.GET.get('visible','')
+        queryset = Requisicion.objects.filter(estatus_id=requisicion_tipo)
         serializer = RequisicionSerializer(queryset, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
     
