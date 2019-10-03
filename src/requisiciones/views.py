@@ -115,3 +115,15 @@ class RequisicionesViewSet(ViewSet):
         requisicion.save()
         return Response(status=status.HTTP_200_OK)
     
+    @action(detail=False, methods=['get'])
+    def total_requisiciones(self, request):
+        requisiciones_espera = len(list(Requisicion.objects.filter(estatus_id=RequesicionEstatus.EN_ESPERA)))
+        requisiciones_cotizadas = len(list(Requisicion.objects.filter(estatus_id=RequesicionEstatus.COTIZADO)))
+        requisiciones_aceptadas = len(list(Requisicion.objects.filter(estatus_id=RequesicionEstatus.ACEPTADO)))
+        requisiciones_rechazadas = len(list(Requisicion.objects.filter(estatus_id=RequesicionEstatus.RECHAZADO)))
+        print(requisiciones_espera,requisiciones_cotizadas,requisiciones_aceptadas,requisiciones_rechazadas)
+        data_requisiciones=[{'espera':requisiciones_espera,
+        'cotizadas':requisiciones_cotizadas,
+        'aceptadas':requisiciones_aceptadas,
+        'rechazadas':requisiciones_rechazadas}]
+        return Response(data_requisiciones, status.HTTP_200_OK)
