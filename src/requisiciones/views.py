@@ -121,9 +121,10 @@ class RequisicionesViewSet(ViewSet):
         requisiciones_cotizadas = len(list(Requisicion.objects.filter(estatus_id=RequesicionEstatus.COTIZADO)))
         requisiciones_aceptadas = len(list(Requisicion.objects.filter(estatus_id=RequesicionEstatus.ACEPTADO)))
         requisiciones_rechazadas = len(list(Requisicion.objects.filter(estatus_id=RequesicionEstatus.RECHAZADO)))
-        print(requisiciones_espera,requisiciones_cotizadas,requisiciones_aceptadas,requisiciones_rechazadas)
-        data_requisiciones=[{'espera':requisiciones_espera,
-        'cotizadas':requisiciones_cotizadas,
-        'aceptadas':requisiciones_aceptadas,
-        'rechazadas':requisiciones_rechazadas}]
+        # print(requisiciones_espera,requisiciones_cotizadas,requisiciones_aceptadas,requisiciones_rechazadas)
+        
+        data_requisiciones=[{"espera":requisiciones_espera,
+        "cotizadas":requisiciones_cotizadas,
+        "aceptadas":requisiciones_aceptadas,
+        "rechazadas":requisiciones_rechazadas}]
         return Response(data_requisiciones, status.HTTP_200_OK)
