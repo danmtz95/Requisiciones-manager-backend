@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'requisiciones',
     'usuarios',
     'proveedores',
+
 ]
 
 MIDDLEWARE = [
