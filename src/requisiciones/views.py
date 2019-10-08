@@ -122,9 +122,51 @@ class RequisicionesViewSet(ViewSet):
         requisiciones_aceptadas = len(list(Requisicion.objects.filter(estatus_id=RequesicionEstatus.ACEPTADO)))
         requisiciones_rechazadas = len(list(Requisicion.objects.filter(estatus_id=RequesicionEstatus.RECHAZADO)))
         # print(requisiciones_espera,requisiciones_cotizadas,requisiciones_aceptadas,requisiciones_rechazadas)
+
+        data_requisiciones=[{"espera":requisiciones_espera,
+        "cotizadas":requisiciones_cotizadas,
+        "aceptadas":requisiciones_aceptadas,
+        "rechazadas":requisiciones_rechazadas}]
+        return Response(data_requisiciones, status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'])
+    def total_requisiciones(self, request):
+        requisiciones_espera = len(list(Requisicion.objects.filter(estatus_id=RequesicionEstatus.EN_ESPERA)))
+        requisiciones_cotizadas = len(list(Requisicion.objects.filter(estatus_id=RequesicionEstatus.COTIZADO)))
+        requisiciones_aceptadas = len(list(Requisicion.objects.filter(estatus_id=RequesicionEstatus.ACEPTADO)))
+        requisiciones_rechazadas = len(list(Requisicion.objects.filter(estatus_id=RequesicionEstatus.RECHAZADO)))
+        # print(requisiciones_espera,requisiciones_cotizadas,requisiciones_aceptadas,requisiciones_rechazadas)
         
         data_requisiciones=[{"espera":requisiciones_espera,
         "cotizadas":requisiciones_cotizadas,
         "aceptadas":requisiciones_aceptadas,
         "rechazadas":requisiciones_rechazadas}]
         return Response(data_requisiciones, status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'])
+    def total_categorias(self, request):
+        data_categorias={}
+        data_list=[]
+        categorias = CategoriaEstado.objects.all()
+        cont=0
+        for categoria in categorias:
+            # data_categorias[categoria.categoria]=Requisicion.objects.filter(estado__categoria=categoria).count()
+            data_categorias['categoria'] = categoria.categoria
+            data_categorias['total'] = Requisicion.objects.filter(estado__categoria=categoria).count() 
+            data_list.append(data_categorias.copy())
+            # data_categorias['categoria' : categoria.categoria, 'total': Requisicion.objects.filter(estado__categoria=categoria).count() ]
+            # data_categorias[cont]={'categoria' : categoria.categoria, 'total': Requisicion.objects.filter(estado__categoria=categoria).count() }
+        return Response(data_list, status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'])
+    def total_tipos(self, request):
+        data_tipos={}
+        data_list=[]
+        tipos = RequesicionTipo.objects.all()
+        for tipo in tipos:
+            print(tipo.concepto)
+            data_tipos['tipo'] = tipo.concepto
+            data_tipos['total'] = Requisicion.objects.filter(tipo__concepto=tipo).count()
+            data_list.append(data_tipos.copy())
+        print(data_list)
+        return Response(data_list, status.HTTP_200_OK)
